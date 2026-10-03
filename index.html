@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Birthday Wishes</title>
+
+<style>
+*{box-sizing:border-box;}
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(30,55,100,.30),transparent 45%),
+        linear-gradient(135deg,#07152f,#020b1c 70%,#06132b);
+    color:#fff;
+    padding:14px 8px 30px;
+}
+
+.page{width:100%;max-width:1100px;margin:auto;}
+
+.title{
+    margin:0;
+    text-align:center;
+    font-size:clamp(17px,5.5vw,25px);
+    line-height:1.02;
+    font-weight:950;
+    letter-spacing:-.4px;
+    text-transform:uppercase;
+    color:#fff;
+}
+
+.title span{color:#ffbf16;}
+
+.decor{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin:0 auto 9px;
+}
+
+.decor i{
+    display:block;
+    width:38px;
+    height:2px;
+    background:#ffbf16;
+    border-radius:20px;
+}
+
+.decor b{
+    width:6px;
+    height:6px;
+    background:#ffbf16;
+    border-radius:50%;
+}
+
+.message-card{
+    position:relative;
+    width:100%;
+    max-width:100%;
+    height:58px;
+    min-height:58px;
+    margin:0 auto;
+    border:2px solid #ffbf16;
+    border-radius:999px;
+    background:#ffca31;
+    box-shadow:0 8px 20px rgba(0,0,0,.30);
+    overflow:hidden;
+}
+
+#wish{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    min-height:58px;
+    margin:0;
+    border:0;
+    outline:0;
+    padding:0 42px;
+    background:transparent;
+    color:#000;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:1000;
+    line-height:1.12;
+    cursor:pointer;
+    text-align:center;
+    appearance:none;
+    -webkit-appearance:none;
+    z-index:10;
+    white-space:normal;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -webkit-text-stroke:.25px #000;
+    background-image:
+        linear-gradient(45deg,transparent 50%,#07152f 50%),
+        linear-gradient(135deg,#07152f 50%,transparent 50%);
+    background-position:
+        calc(100% - 22px) 50%,
+        calc(100% - 13px) 50%;
+    background-size:8px 8px,8px 8px;
+    background-repeat:no-repeat;
+}
+
+#wish option{
+    color:#000;
+    background:#ffca31;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:1000;
+    padding:8px;
+}
+
+.send{
+    display:block;
+    width:88%;
+    min-width:0;
+    margin:9px auto 20px;
+    padding:11px 18px;
+    border:2px solid #ffbf16;
+    border-radius:14px;
+    background:#07152f;
+    color:#ffbf16;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 6px 15px rgba(0,0,0,.30);
+}
+
+.send:active{transform:translateY(1px);}
+.send:disabled{opacity:.65;cursor:not-allowed;}
+
+.status{
+    display:none;
+    max-width:700px;
+    margin:0 auto 20px;
+    padding:14px 18px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:800;
+}
+
+.status.show{
+    display:block;
+    background:#153f28;
+    color:#b9ffd0;
+    border:1px solid #42cf75;
+}
+
+.status.error{
+    background:#4a1e25;
+    color:#ffd1d7;
+    border-color:#ff6575;
+}
+
+@media(min-width:651px){
+    body{padding:20px 14px 40px;}
+
+    .title{
+        font-size:clamp(18px,3vw,30px);
+        line-height:1.02;
+        letter-spacing:-.6px;
+    }
+
+    .decor{gap:6px;margin-bottom:10px;}
+    .decor i{width:50px;height:2px;}
+    .decor b{width:7px;height:7px;}
+
+    .message-card{
+        height:68px;
+        min-height:68px;
+        border-radius:999px;
+    }
+
+    #wish{
+        min-height:68px;
+        padding:0 52px;
+        font-size:clamp(14px,1.8vw,22px);
+        line-height:1.15;
+        background-position:
+            calc(100% - 27px) 50%,
+            calc(100% - 17px) 50%;
+        background-size:9px 9px,9px 9px;
+    }
+
+    #wish option{
+        font-size:17px;
+        padding:8px;
+    }
+
+    .send{
+        width:auto;
+        min-width:240px;
+        margin:10px auto 20px;
+        padding:11px 24px;
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1 class="title">
+HOW MANY GOOD THINGS IN LIFE<br>
+<span>DO YOU WISH OUR CELEBRANT?</span>
+</h1>
+
+<div class="decor"><i></i><b></b><i></i></div>
+
+<form id="wishForm">
+
+<div class="message-card">
+
+<select id="wish" required aria-label="Select how many good things in life you wish our celebrant">
+<option value="" selected disabled>
+SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
+</option>
+</select>
+
+</div>
+
+<button class="send" type="submit">
+✈️ &nbsp; SEND BIRTHDAY WISH
+</button>
+
+</form>
+
+<div id="status" class="status"></div>
+
+</div>
+
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {getDatabase,ref,push,serverTimestamp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+import {getAuth,signInAnonymously}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+const firebaseConfig={
+    apiKey:"AIzaSyDcdd3ZSae1Ddxmpw7pFVNwPNql0cF6C0E",
+    authDomain:"birthday-wishes-960bd.firebaseapp.com",
+    databaseURL:"https://birthday-wishes-960bd-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId:"birthday-wishes-960bd",
+    storageBucket:"birthday-wishes-960bd.firebasestorage.app",
+    messagingSenderId:"61276094940",
+    appId:"1:61276094940:web:5863a7d82caf1628170f19",
+    measurementId:"G-F9HZHJPXRL"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const auth=getAuth(app);
+
+const form=document.getElementById("wishForm");
+const wish=document.getElementById("wish");
+const status=document.getElementById("status");
+const button=form.querySelector(".send");
+
+function formatNumber(number){
+    return number.toLocaleString("en-US");
+}
+
+function addWish(number,unit){
+    const option=document.createElement("option");
+    option.value=`${formatNumber(number)} ${unit} good things in life to you`;
+    option.textContent=`${formatNumber(number)} ${unit} good things in life to you`;
+    wish.appendChild(option);
+}
+
+for(let number=1;number<=999;number++){
+    addWish(number,"million");
+}
+
+for(let number=1;number<=999;number++){
+    addWish(number,"billion");
+}
+
+for(let number=1;number<=900;number++){
+    addWish(number,"trillion");
+}
+
+function showStatus(text,error=false){
+    status.textContent=text;
+    status.className="status show"+(error?" error":"");
+}
+
+form.addEventListener("submit",async(e)=>{
+    e.preventDefault();
+
+    const selectedWish=wish.value.trim();
+
+    if(!selectedWish){
+        showStatus(
+            "Please select how many good things in life you wish our celebrant.",
+            true
+        );
+        return;
+    }
+
+    button.disabled=true;
+    button.textContent="SENDING...";
+
+    try{
+        if(!auth.currentUser){
+            await signInAnonymously(auth);
+        }
+
+        const wishesRef=ref(db,"birthdayWishes");
+
+        await push(wishesRef,{
+            message:selectedWish,
+            createdAt:serverTimestamp(),
+            status:"new"
+        });
+
+        form.reset();
+
+        showStatus(
+            "🎉 Your birthday wish has been sent successfully!"
+        );
+
+    }catch(error){
+        console.error("Birthday wish error:",error);
+
+        showStatus(
+            "We could not send your wish. Please try again.",
+            true
+        );
+
+    }finally{
+        button.disabled=false;
+        button.textContent="✈️   SEND BIRTHDAY WISH";
+    }
+});
+</script>
+
+</body>
+</html>
