@@ -121,6 +121,66 @@ body{
     padding:8px;
 }
 
+/* Country dropdown */
+.country-card{
+    position:relative;
+    width:100%;
+    max-width:100%;
+    height:58px;
+    min-height:58px;
+    margin:10px auto 0;
+    border:2px solid #ffbf16;
+    border-radius:999px;
+    background:#ffca31;
+    box-shadow:0 8px 20px rgba(0,0,0,.30);
+    overflow:hidden;
+}
+
+#country{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    min-height:58px;
+    margin:0;
+    border:0;
+    outline:0;
+    padding:0 42px;
+    background:transparent;
+    color:#000;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:1000;
+    line-height:1.12;
+    cursor:pointer;
+    text-align:center;
+    appearance:none;
+    -webkit-appearance:none;
+    z-index:10;
+    white-space:normal;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -webkit-text-stroke:.25px #000;
+    background-image:
+        linear-gradient(45deg,transparent 50%,#07152f 50%),
+        linear-gradient(135deg,#07152f 50%,transparent 50%);
+    background-position:
+        calc(100% - 22px) 50%,
+        calc(100% - 13px) 50%;
+    background-size:8px 8px,8px 8px;
+    background-repeat:no-repeat;
+}
+
+#country option{
+    color:#000;
+    background:#ffca31;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:1000;
+    padding:8px;
+}
+
 .send{
     display:block;
     width:88%;
@@ -198,6 +258,28 @@ body{
         padding:8px;
     }
 
+    .country-card{
+        height:68px;
+        min-height:68px;
+        border-radius:999px;
+    }
+
+    #country{
+        min-height:68px;
+        padding:0 52px;
+        font-size:clamp(14px,1.8vw,22px);
+        line-height:1.15;
+        background-position:
+            calc(100% - 27px) 50%,
+            calc(100% - 17px) 50%;
+        background-size:9px 9px,9px 9px;
+    }
+
+    #country option{
+        font-size:17px;
+        padding:8px;
+    }
+
     .send{
         width:auto;
         min-width:240px;
@@ -227,6 +309,14 @@ HOW MANY GOOD THINGS IN LIFE<br>
 <option value="" selected disabled>
 SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
 </option>
+</select>
+
+</div>
+
+<div class="country-card">
+
+<select id="country" required aria-label="Select your country">
+<option value="" selected disabled>SELECT COUNTRY</option>
 </select>
 
 </div>
@@ -268,6 +358,7 @@ const auth=getAuth(app);
 
 const form=document.getElementById("wishForm");
 const wish=document.getElementById("wish");
+const country=document.getElementById("country");
 const status=document.getElementById("status");
 const button=form.querySelector(".send");
 
@@ -294,6 +385,50 @@ for(let number=1;number<=900;number++){
     addWish(number,"trillion");
 }
 
+const countries=[
+"Afghanistan","Albania","Algeria","Andorra","Angola",
+"Antigua and Barbuda","Argentina","Armenia","Australia","Austria",
+"Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus",
+"Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina",
+"Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi",
+"Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic",
+"Chad","Chile","China","Colombia","Comoros","Congo",
+"Costa Rica","Cote d'Ivoire","Croatia","Cuba","Cyprus","Czechia",
+"Democratic Republic of the Congo","Denmark","Djibouti","Dominica",
+"Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea",
+"Eritrea","Estonia","Eswatini","Ethiopia","Fiji","Finland","France",
+"Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada",
+"Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras",
+"Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland",
+"Israel","Italy","Jamaica","Japan","Jordan","Kazakhstan","Kenya",
+"Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho",
+"Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Madagascar",
+"Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands",
+"Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco",
+"Mongolia","Montenegro","Morocco","Mozambique","Myanmar","Namibia",
+"Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger",
+"Nigeria","North Korea","North Macedonia","Norway","Oman","Pakistan",
+"Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru",
+"Philippines","Poland","Portugal","Qatar","Romania","Russia","Rwanda",
+"Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines",
+"Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal",
+"Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia",
+"Solomon Islands","Somalia","South Africa","South Korea","South Sudan",
+"Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria",
+"Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo",
+"Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu",
+"Uganda","Ukraine","United Arab Emirates","United Kingdom",
+"United States","Uruguay","Uzbekistan","Vanuatu","Vatican City",
+"Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
+];
+
+countries.forEach(name=>{
+    const option=document.createElement("option");
+    option.value=name;
+    option.textContent=name;
+    country.appendChild(option);
+});
+
 function showStatus(text,error=false){
     status.textContent=text;
     status.className="status show"+(error?" error":"");
@@ -303,10 +438,19 @@ form.addEventListener("submit",async(e)=>{
     e.preventDefault();
 
     const selectedWish=wish.value.trim();
+    const selectedCountry=country.value.trim();
 
     if(!selectedWish){
         showStatus(
             "Please select how many good things in life you wish our celebrant.",
+            true
+        );
+        return;
+    }
+
+    if(!selectedCountry){
+        showStatus(
+            "Please select your country before sending.",
             true
         );
         return;
@@ -324,6 +468,7 @@ form.addEventListener("submit",async(e)=>{
 
         await push(wishesRef,{
             message:selectedWish,
+            country:selectedCountry,
             createdAt:serverTimestamp(),
             status:"new"
         });
