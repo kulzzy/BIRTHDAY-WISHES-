@@ -3,17 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Kulzzy Radio - Birthday Wishes Admin</title>
 
 <style>
+*{box-sizing:border-box}
 
-*{
-    box-sizing:border-box;
-}
-
-html,
-body{
+html,body{
     margin:0;
     padding:0;
     min-height:100%;
@@ -22,22 +17,10 @@ body{
 
 body{
     min-height:100vh;
-
     background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(30,55,100,.30),
-            transparent 45%
-        ),
-        linear-gradient(
-            135deg,
-            #07152f,
-            #020b1c 70%,
-            #06132b
-        );
-
+        radial-gradient(circle at 50% 0%,rgba(30,55,100,.30),transparent 45%),
+        linear-gradient(135deg,#07152f,#020b1c 70%,#06132b);
     color:#fff;
-
     padding:28px 14px 50px;
 }
 
@@ -54,115 +37,101 @@ body{
 
 .title{
     margin:0;
-
-    font-size:
-        clamp(
-            28px,
-            5vw,
-            54px
-        );
-
+    font-size:clamp(28px,5vw,54px);
     line-height:1.05;
-
     font-weight:950;
-
     text-transform:uppercase;
 }
 
-.title span{
-    color:#ffbf16;
-}
+.title span{color:#ffbf16}
 
-
-/* =========================================
-   MAIN PANEL
-========================================= */
-
+.login-card,
 .panel{
     width:100%;
     max-width:900px;
-
     margin:0 auto;
-
-    background:
-        rgba(7,21,47,.96);
-
-    border:
-        2px solid #ffbf16;
-
+    background:rgba(7,21,47,.96);
+    border:2px solid #ffbf16;
     border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
 
-    box-shadow:
-        0 12px 30px rgba(0,0,0,.35);
+.login-card{
+    max-width:520px;
+    padding:28px;
+}
 
+.panel{
+    display:none;
     overflow:hidden;
 }
 
+label{
+    display:block;
+    margin:0 0 8px;
+    color:#ffbf16;
+    font-weight:800;
+}
 
-/* =========================================
-   TOP BAR
-========================================= */
+input{
+    width:100%;
+    padding:14px 15px;
+    margin-bottom:16px;
+    border:1px solid #ffbf16;
+    border-radius:10px;
+    outline:none;
+    background:#fff;
+    color:#111;
+    font-size:16px;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:900;
+}
+
+.login-btn{
+    width:100%;
+    padding:15px;
+    background:#ffbf16;
+    color:#07152f;
+    font-size:17px;
+}
 
 .topbar{
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
-
     gap:12px;
-
     padding:18px 20px;
-
-    border-bottom:
-        1px solid
-        rgba(255,191,22,.45);
+    border-bottom:1px solid rgba(255,191,22,.45);
 }
 
 .topbar h2{
     margin:0;
-
     color:#ffbf16;
-
     font-size:24px;
 }
 
-.count{
-    color:#dfe5ef;
-
-    font-size:14px;
-
-    margin-top:4px;
+.logout{
+    padding:10px 16px;
+    background:#07152f;
+    border:1px solid #ffbf16;
+    color:#ffbf16;
 }
-
-
-/* =========================================
-   MESSAGES
-========================================= */
 
 .messages{
     padding:18px;
 }
 
 .message{
-    background:
-        linear-gradient(
-            135deg,
-            #ffb913,
-            #ffca31
-        );
-
+    background:linear-gradient(135deg,#ffb913,#ffca31);
     color:#111;
-
     border-radius:14px;
-
     padding:18px;
-
     margin-bottom:14px;
-
-    box-shadow:
-        0 5px 15px
-        rgba(0,0,0,.18);
 }
 
 .message:last-child{
@@ -171,803 +140,314 @@ body{
 
 .message-top{
     display:flex;
-
     justify-content:space-between;
-
     gap:15px;
-
     margin-bottom:10px;
-
     font-size:13px;
-
     color:#4d461d;
 }
 
 .message-text{
     font-size:18px;
-
     font-weight:500;
-
     line-height:1.5;
-
     white-space:pre-wrap;
-
     overflow-wrap:anywhere;
 }
 
-
-/* =========================================
-   EMPTY
-========================================= */
-
 .empty{
     text-align:center;
-
     padding:40px 15px;
-
     color:#dfe5ef;
-
-    font-size:16px;
-
-    line-height:1.5;
 }
 
-
-/* =========================================
-   STATUS
-========================================= */
-
 .status{
-    margin:18px;
-
-    padding:13px 15px;
-
+    margin-top:14px;
+    padding:12px 14px;
     border-radius:10px;
-
     text-align:center;
-
     font-weight:800;
-
     display:none;
-
-    line-height:1.45;
 }
 
 .status.show{
     display:block;
-
     background:#153f28;
-
     color:#b9ffd0;
-
-    border:
-        1px solid #42cf75;
+    border:1px solid #42cf75;
 }
 
 .status.error{
     background:#4a1e25;
-
     color:#ffd1d7;
-
     border-color:#ff6575;
 }
 
-
-/* =========================================
-   MOBILE
-========================================= */
+.count{
+    color:#dfe5ef;
+    font-size:14px;
+}
 
 @media(max-width:650px){
+    body{padding:20px 9px 35px}
 
-    body{
-        padding:
-            20px
-            9px
-            35px;
-    }
+    .login-card{padding:20px}
 
     .topbar{
         align-items:flex-start;
-
         flex-direction:column;
     }
 
-    .topbar h2{
-        font-size:21px;
-    }
+    .topbar h2{font-size:21px}
 
     .message-top{
         flex-direction:column;
-
         gap:5px;
     }
-
-    .message-text{
-        font-size:17px;
-    }
-
 }
+
+.wish-inspiration{padding:18px;border-bottom:1px solid rgba(255,191,22,.45);}
+.wish-inspiration h3{margin:0 0 12px;color:#ffbf16;font-size:18px;}
+.inspiration-grid{display:grid;grid-template-columns:1fr;gap:8px;}
+.inspiration-card{padding:12px;border:1px solid rgba(255,191,22,.85);border-radius:10px;background:rgba(255,191,22,.10);overflow-wrap:anywhere;}
+.inspiration-wish{font-weight:900;color:#ffca31;line-height:1.4;}
+.inspiration-country{margin-top:5px;color:#dfe5ef;font-size:12px;font-weight:800;}
+.message-country{margin-top:8px;font-size:13px;font-weight:900;color:#4d461d;}
+@media(min-width:650px){.inspiration-grid{grid-template-columns:1fr 1fr}.inspiration-card:last-child{grid-column:1/-1}}
 
 </style>
 </head>
 
-
 <body>
-
 <div class="page">
 
-
-    <!-- =====================================
-         HEADER
-    ====================================== -->
-
     <div class="header">
-
-        <h1 class="title">
-
-            BIRTHDAY
-            <span>WISHES</span>
-
-        </h1>
-
+        <h1 class="title">BIRTHDAY <span>WISHES</span></h1>
     </div>
 
+    <div id="loginCard" class="login-card">
+        <label for="email">Admin Email</label>
+        <input id="email" type="email" autocomplete="username" placeholder="Enter admin email">
 
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Enter password">
 
-    <!-- =====================================
-         ADMIN PANEL
-    ====================================== -->
+        <button id="loginBtn" class="login-btn" type="button">LOGIN TO VIEW WISHES</button>
 
-    <div
-        id="panel"
-        class="panel"
-    >
+        <div id="loginStatus" class="status"></div>
+    </div>
 
-
-        <!-- TOP BAR -->
-
+    <div id="panel" class="panel">
         <div class="topbar">
-
             <div>
-
-                <h2>
-                    Birthday Wishes
-                </h2>
-
-                <div
-                    id="count"
-                    class="count"
-                >
-                    Connecting to Firebase...
-                </div>
-
+                <h2>Birthday Wishes</h2>
+                <div id="count" class="count">0 wishes</div>
             </div>
-
+            <button id="logoutBtn" class="logout" type="button">LOGOUT</button>
         </div>
 
+        <section class="wish-inspiration">
+            <h3>WISH INSPIRATIONS</h3>
+            <div id="inspirationGrid" class="inspiration-grid" aria-live="polite"></div>
+        </section>
 
-
-        <!-- MESSAGES -->
-
-        <div
-            id="messages"
-            class="messages"
-        >
-
-            <div class="empty">
-
-                Connecting to Birthday Wishes database...
-
-            </div>
-
+        <div id="messages" class="messages">
+            <div class="empty">Loading birthday wishes...</div>
         </div>
-
-
-
-        <!-- STATUS -->
-
-        <div
-            id="status"
-            class="status"
-        ></div>
-
-
     </div>
 
 </div>
 
-
-
 <script type="module">
-
-
-/* =========================================================
-   FIREBASE IMPORTS
-========================================================= */
-
-import {
-    initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import {
     getDatabase,
     ref,
     onValue
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
-
-
-/* =========================================================
-   YOUR REAL FIREBASE CONFIGURATION
-========================================================= */
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyDcdd3ZSae1Ddxmpw7pFVNwPNql0cF6C0E",
-
-    authDomain:
-        "birthday-wishes-960bd.firebaseapp.com",
-
-    databaseURL:
-        "https://birthday-wishes-960bd-default-rtdb.europe-west1.firebasedatabase.app",
-
-    projectId:
-        "birthday-wishes-960bd",
-
-    storageBucket:
-        "birthday-wishes-960bd.firebasestorage.app",
-
-    messagingSenderId:
-        "61276094940",
-
-    appId:
-        "1:61276094940:web:5863a7d82caf1628170f19",
-
-    measurementId:
-        "G-F9HZHJPXRL"
-
+    apiKey: "AIzaSyDcdd3ZSae1Ddxmpw7pFVNwPNql0cF6C0E",
+    authDomain: "birthday-wishes-960bd.firebaseapp.com",
+    databaseURL: "https://birthday-wishes-960bd-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "birthday-wishes-960bd",
+    storageBucket: "birthday-wishes-960bd.firebasestorage.app",
+    messagingSenderId: "61276094940",
+    appId: "1:61276094940:web:5863a7d82caf1628170f19",
+    measurementId: "G-F9HZHJPXRL"
 };
 
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
 
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
-const messages =
-    document.getElementById(
-        "messages"
-    );
-
-
-const count =
-    document.getElementById(
-        "count"
-    );
-
-
-const status =
-    document.getElementById(
-        "status"
-    );
-
-
-
-/* =========================================================
-   STATUS FUNCTION
-========================================================= */
-
-function showStatus(
-    text,
-    error = false
-){
-
-    status.textContent =
-        text;
-
-    status.className =
-        "status show" +
-        (
-            error
-            ? " error"
-            : ""
-        );
-
+const loginCard = document.getElementById("loginCard");
+const panel = document.getElementById("panel");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const loginStatus = document.getElementById("loginStatus");
+const messages = document.getElementById("messages");
+const count = document.getElementById("count");
+const inspirationGrid = document.getElementById("inspirationGrid");
+const countries = ['Nigeria', 'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola', 'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan', 'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia', 'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile', 'China', 'Colombia', 'Comoros', 'Congo (Congo-Brazzaville)', 'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czechia', 'Côte d’Ivoire', 'Democratic Republic of the Congo', 'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador', 'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia', 'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France', 'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana', 'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau', 'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland', 'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan', 'Kazakhstan', 'Kenya', 'Kiribati', 'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia', 'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia', 'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania', 'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar', 'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand', 'Nicaragua', 'Niger', 'North Korea', 'North Macedonia', 'Norway', 'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland', 'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda', 'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino', 'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles', 'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somalia', 'South Africa', 'South Korea', 'South Sudan', 'Spain', 'Sri Lanka', 'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste', 'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey', 'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates', 'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu', 'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia', 'Zimbabwe'];
+// Keep the display choices identical to the main page's wish dropdown.
+// Main page options are 1–9,999 for each of these units, in this order.
+const units = ["million", "billion", "trillion"];
+const selectableWishes = [];
+for (const unit of units) {
+    for (let number = 1; number <= 9999; number++) {
+        selectableWishes.push(`${number.toLocaleString("en-US")} ${unit} good things in life to you`);
+    }
 }
 
-
-
-/* =========================================================
-   DATE FORMATTER
-========================================================= */
-
-function formatDate(
-    timestamp
-){
-
-    if(
-        timestamp === null ||
-        timestamp === undefined ||
-        timestamp === ""
-    ){
-
-        return "Date unavailable";
-
+function randomFrom(items) { return items[Math.floor(Math.random() * items.length)]; }
+function refreshInspirations() {
+    const entries = new Set();
+    while (entries.size < 5) {
+        entries.add(JSON.stringify({wish: randomFrom(selectableWishes), country: randomFrom(countries)}));
     }
+    inspirationGrid.replaceChildren();
+    entries.forEach((entry) => {
+        const data = JSON.parse(entry);
+        const card = document.createElement("div");
+        card.className = "inspiration-card";
+        const wishText = document.createElement("div");
+        wishText.className = "inspiration-wish";
+        wishText.textContent = data.wish;
+        const countryText = document.createElement("div");
+        countryText.className = "inspiration-country";
+        countryText.textContent = data.country;
+        card.append(wishText, countryText);
+        inspirationGrid.appendChild(card);
+    });
+}
+refreshInspirations();
+setInterval(refreshInspirations, 8000);
 
-
-    const numericTimestamp =
-        Number(timestamp);
-
-
-    if(
-        !Number.isFinite(
-            numericTimestamp
-        )
-    ){
-
-        return "Date unavailable";
-
-    }
-
-
-    const date =
-        new Date(
-            numericTimestamp
-        );
-
-
-    if(
-        Number.isNaN(
-            date.getTime()
-        )
-    ){
-
-        return "Date unavailable";
-
-    }
-
-
-    return date.toLocaleString();
-
+function showLoginStatus(text, error=false) {
+    loginStatus.textContent = text;
+    loginStatus.className = "status show" + (error ? " error" : "");
 }
 
+loginBtn.addEventListener("click", async () => {
+    const userEmail = email.value.trim();
+    const userPassword = password.value;
 
-
-/* =========================================================
-   DISPLAY WISHES
-========================================================= */
-
-function displayWishes(
-    data
-){
-
-    console.log(
-        "Firebase birthdayWishes data:",
-        data
-    );
-
-
-    /* -----------------------------------------
-       NO DATA
-    ----------------------------------------- */
-
-    if(
-        data === null ||
-        data === undefined
-    ){
-
-        messages.innerHTML =
-
-            '<div class="empty">' +
-
-            'No birthday wishes have been received yet.' +
-
-            '</div>';
-
-
-        count.textContent =
-            "0 wishes";
-
-
-        status.className =
-            "status";
-
-
+    if (!userEmail || !userPassword) {
+        showLoginStatus("Enter your admin email and password.", true);
         return;
-
     }
 
+    loginBtn.disabled = true;
+    loginBtn.textContent = "LOGGING IN...";
 
+    try {
+        await signInWithEmailAndPassword(auth, userEmail, userPassword);
+        loginStatus.className = "status";
+    } catch (error) {
+        console.error(error);
+        showLoginStatus("Login failed. Check your email and password.", true);
+    } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = "LOGIN TO VIEW WISHES";
+    }
+});
 
-    /* -----------------------------------------
-       CONVERT OBJECT TO ARRAY
-    ----------------------------------------- */
+logoutBtn.addEventListener("click", async () => {
+    await signOut(auth);
+});
 
-    const wishes =
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        loginCard.style.display = "none";
+        panel.style.display = "block";
+        listenForWishes();
+    } else {
+        loginCard.style.display = "block";
+        panel.style.display = "none";
+        messages.innerHTML = '<div class="empty">Login to view birthday wishes.</div>';
+        count.textContent = "0 wishes";
+    }
+});
 
-        Object.entries(
-            data
-        )
+function listenForWishes() {
+    const wishesRef = ref(db, "birthdayWishes");
 
-        .map(
-            ([id, wish]) => ({
+    onValue(wishesRef, (snapshot) => {
+        const data = snapshot.val();
 
-                id,
-
-                ...wish
-
-            })
-        )
-
-        .sort(
-            (a,b) =>
-
-                (
-                    Number(
-                        b.createdAt
-                    )
-                    || 0
-                )
-
-                -
-
-                (
-                    Number(
-                        a.createdAt
-                    )
-                    || 0
-                )
-        );
-
-
-
-    /* -----------------------------------------
-       COUNT
-    ----------------------------------------- */
-
-    count.textContent =
-
-        `${wishes.length} ${
-            wishes.length === 1
-            ? "wish"
-            : "wishes"
-        }`;
-
-
-
-    /* -----------------------------------------
-       CLEAR OLD CONTENT
-    ----------------------------------------- */
-
-    messages.innerHTML =
-        "";
-
-
-
-    /* -----------------------------------------
-       DISPLAY EACH WISH
-    ----------------------------------------- */
-
-    wishes.forEach(
-        (wish) => {
-
-
-            const item =
-                document.createElement(
-                    "div"
-                );
-
-            item.className =
-                "message";
-
-
-
-            /* TOP */
-
-            const top =
-                document.createElement(
-                    "div"
-                );
-
-            top.className =
-                "message-top";
-
-
-
-            /* SENDER */
-
-            const sender =
-                document.createElement(
-                    "strong"
-                );
-
-            sender.textContent =
-                "ANONYMOUS";
-
-
-
-            /* DATE */
-
-            const date =
-                document.createElement(
-                    "span"
-                );
-
-            date.textContent =
-                formatDate(
-                    wish.createdAt
-                );
-
-
-
-            top.appendChild(
-                sender
-            );
-
-            top.appendChild(
-                date
-            );
-
-
-
-            /* MESSAGE */
-
-            const text =
-                document.createElement(
-                    "div"
-                );
-
-            text.className =
-                "message-text";
-
-            text.textContent =
-                wish.message
-                || "";
-
-
-
-            /* ADD TO PAGE */
-
-            item.appendChild(
-                top
-            );
-
-            item.appendChild(
-                text
-            );
-
-            messages.appendChild(
-                item
-            );
-
+        if (!data) {
+            messages.innerHTML = '<div class="empty">No birthday wishes have been received yet.</div>';
+            count.textContent = "0 wishes";
+            return;
         }
-    );
 
+        const wishes = Object.entries(data)
+            .map(([id, wish]) => ({ id, ...wish }))
+            .sort((a, b) => (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0));
 
+        count.textContent = `${wishes.length} ${wishes.length === 1 ? "wish" : "wishes"}`;
 
-    status.className =
-        "status";
+        messages.innerHTML = "";
 
-}
+        wishes.forEach((wish) => {
+            const item = document.createElement("div");
+            item.className = "message";
 
+            const top = document.createElement("div");
+            top.className = "message-top";
 
+            const sender = document.createElement("strong");
+            sender.textContent = "ANONYMOUS";
 
-/* =========================================================
-   FIREBASE DATABASE LISTENER
-========================================================= */
+            const date = document.createElement("span");
+            date.textContent = formatDate(wish.createdAt);
 
-function listenForWishes(){
+            top.appendChild(sender);
+            top.appendChild(date);
 
-    console.log(
-        "Starting Firebase database listener..."
-    );
+            const text = document.createElement("div");
+            text.className = "message-text";
+            text.textContent = wish.message || "";
 
+            item.appendChild(top);
+            item.appendChild(text);
 
-    try{
-
-
-        const wishesRef =
-            ref(
-                db,
-                "birthdayWishes"
-            );
-
-
-        onValue(
-
-            wishesRef,
-
-
-            /* ---------------------------------
-               SUCCESS
-            --------------------------------- */
-
-            (snapshot) => {
-
-                console.log(
-                    "Firebase snapshot received."
-                );
-
-
-                displayWishes(
-                    snapshot.val()
-                );
-
-            },
-
-
-            /* ---------------------------------
-               ERROR
-            --------------------------------- */
-
-            (error) => {
-
-                console.error(
-                    "Firebase Database Error:",
-                    error
-                );
-
-
-                messages.innerHTML =
-
-                    '<div class="empty">' +
-
-                    'Unable to read birthday wishes.' +
-
-                    '</div>';
-
-
-                count.textContent =
-                    "Database error";
-
-
-                showStatus(
-
-                    "Firebase Database Error: " +
-
-                    (
-                        error.message
-                        ||
-                        "Access denied or database unavailable."
-                    ),
-
-                    true
-
-                );
-
+            if (wish.country) {
+                const countryLine = document.createElement("div");
+                countryLine.className = "message-country";
+                countryLine.textContent = "Country: " + wish.country;
+                item.appendChild(countryLine);
             }
 
-        );
+            messages.appendChild(item);
+        });
+    }, (error) => {
+        console.error(error);
+        messages.innerHTML = '<div class="empty">Unable to read the birthday wishes. Check your Firebase database rules.</div>';
+    });
+}
 
+function formatDate(timestamp) {
+    if (!timestamp) return "Date unavailable";
 
-    }catch(error){
+    const date = new Date(Number(timestamp));
 
-        console.error(
-            "Listener Error:",
-            error
-        );
-
-
-        count.textContent =
-            "Connection error";
-
-
-        messages.innerHTML =
-
-            '<div class="empty">' +
-
-            'Could not connect to Firebase.' +
-
-            '</div>';
-
-
-        showStatus(
-
-            "Could not connect to Firebase: " +
-
-            (
-                error.message
-                ||
-                error
-            ),
-
-            true
-
-        );
-
+    if (Number.isNaN(date.getTime())) {
+        return "Date unavailable";
     }
 
+    return date.toLocaleString();
 }
-
-
-
-/* =========================================================
-   INITIALIZE FIREBASE
-========================================================= */
-
-let app;
-
-let db;
-
-
-try{
-
-
-    console.log(
-        "Initializing Firebase..."
-    );
-
-
-    app =
-        initializeApp(
-            firebaseConfig
-        );
-
-
-    db =
-        getDatabase(
-            app
-        );
-
-
-    console.log(
-        "Firebase initialized successfully."
-    );
-
-
-    count.textContent =
-        "Connected — loading wishes...";
-
-
-    listenForWishes();
-
-
-}catch(error){
-
-
-    console.error(
-        "Firebase Initialization Error:",
-        error
-    );
-
-
-    count.textContent =
-        "Firebase connection failed";
-
-
-    messages.innerHTML =
-
-        '<div class="empty">' +
-
-        'Firebase could not be initialized.' +
-
-        '</div>';
-
-
-    showStatus(
-
-        "Firebase initialization error: " +
-
-        (
-            error.message
-            ||
-            error
-        ),
-
-        true
-
-    );
-
-}
-
-
 </script>
 
 </body>
