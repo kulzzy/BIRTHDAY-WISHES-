@@ -229,13 +229,16 @@ body{
  padding:12px 0;border:1px solid rgba(255,191,22,.55);border-radius:14px;overflow:hidden;
  background:linear-gradient(135deg,rgba(4,15,37,.98),rgba(5,24,51,.96));
 }
-.wish-track{display:flex;align-items:stretch;gap:10px;width:max-content;animation:wishScroll 48s linear infinite;}
+.wish-track{display:flex;align-items:stretch;gap:10px;width:max-content;animation:wishScroll 30s linear infinite;}
 #wishActivity:hover .wish-track{animation-play-state:paused;}
 .wish-track-group{display:flex;align-items:stretch;gap:10px;padding-right:10px;}
 @keyframes wishScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .announcement-section{margin:30px 0 0;padding:18px 14px 20px;border:1px solid rgba(255,191,22,.65);border-radius:16px;background:linear-gradient(135deg,rgba(4,15,37,.98),rgba(5,24,51,.96));box-shadow:0 8px 22px rgba(0,0,0,.25);}
 .announcement-title{margin:0;text-align:center;color:#ffca31;font-size:clamp(19px,5vw,27px);font-weight:950;line-height:1.15;}
 .announcement-subtitle{margin:7px 0 16px;text-align:center;color:#fff;font-size:14px;font-weight:800;}
+.announcement-date-wrap{margin:0 0 12px;}
+.announcement-date-wrap label{display:block;margin:0 0 7px;color:#ffca31;font-size:12px;font-weight:950;letter-spacing:.4px;}
+.announcement-date-wrap input{display:block;width:100%;min-height:46px;padding:12px 13px;border:2px solid #ffbf16;border-radius:10px;background:#07152f;color:#fff;font:800 15px Arial,Helvetica,sans-serif;outline:none;cursor:default;}
 .announcement-form{display:grid;gap:11px;}
 .announcement-form input,.announcement-form select{display:block;width:100%;min-height:49px;padding:12px 13px;border:2px solid #ffbf16;border-radius:10px;background:#07152f;color:#ffca31;font:800 15px Arial,Helvetica,sans-serif;outline:none;}
 .announcement-form input::placeholder{color:#e7eaf1;opacity:1;}
@@ -305,6 +308,11 @@ SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
     <h2 id="announcementTitle" class="announcement-title">ANNOUNCE ME LIVE ON-AIR</h2>
     <p class="announcement-subtitle">( Free Celebration Announcements )</p>
 
+    <div class="announcement-date-wrap">
+        <label for="announcementDate">ANNOUNCEMENT DATE (AUTOMATIC)</label>
+        <input id="announcementDate" name="announcementDate" type="text" readonly aria-readonly="true" autocomplete="off">
+    </div>
+
     <form id="announcementForm" class="announcement-form">
         <input id="celebrantName" name="celebrantName" type="text" maxlength="100" placeholder="Celebrant name or name of person celebrating" aria-label="Celebrant name or name of person celebrating" required>
         <input id="celebrantRelationship" name="celebrantRelationship" type="text" maxlength="100" placeholder="Who the celebrant is to you" aria-label="Who the celebrant is to you" required>
@@ -332,7 +340,7 @@ SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
 import {initializeApp}
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 
-import {getDatabase,ref,push,serverTimestamp}
+import {getDatabase,ref,push,serverTimestamp,onValue}
 from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
 
 import {getAuth,signInAnonymously}
@@ -395,14 +403,30 @@ function randomItem(items){
     return items[Math.floor(Math.random()*items.length)];
 }
 
-function refreshWishActivity(){
+function refreshWishActivity(submittedWishes=[]){
     const wishOptions=Array.from(wish.options).filter(option=>option.value);
     const shuffled=wishOptions.slice();
     for(let i=shuffled.length-1;i>0;i--){
         const j=Math.floor(Math.random()*(i+1));
         [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
     }
-    const selected=shuffled.slice(0,5);
+
+    // Keep the normal random wishes moving even when nobody has submitted a wish.
+    const cards=[];
+    shuffled.slice(0,5).forEach(option=>cards.push({
+        message:option.textContent,
+        country:randomItem(countries)
+    }));
+
+    // Add real public submissions to the same moving ticker as they arrive.
+    submittedWishes.slice(0,12).forEach(item=>cards.push({
+        message:String(item.message||'').trim(),
+        country:String(item.country||randomItem(countries)).trim()
+    }));
+
+    const usableCards=cards.filter(item=>item.message);
+    if(!usableCards.length) return;
+
     wishActivity.replaceChildren();
     const track=document.createElement("div");
     track.className="wish-track";
@@ -412,26 +436,50 @@ function refreshWishActivity(){
     secondGroup.className="wish-track-group";
     secondGroup.setAttribute("aria-hidden","true");
 
-    function makeCard(option){
+    function makeCard(data){
         const card=document.createElement("div");
         card.className="wish-activity-card";
         const wishText=document.createElement("div");
         wishText.className="wish-activity-text";
-        wishText.textContent=option.textContent;
+        wishText.textContent=data.message;
         const countryText=document.createElement("div");
         countryText.className="wish-activity-country";
-        countryText.textContent=randomItem(countries);
+        countryText.textContent=data.country;
         card.append(wishText,countryText);
         return card;
     }
-    selected.forEach(option=>{
-        firstGroup.appendChild(makeCard(option));
-        secondGroup.appendChild(makeCard(option));
+    usableCards.forEach(data=>{
+        firstGroup.appendChild(makeCard(data));
+        secondGroup.appendChild(makeCard(data));
     });
     track.append(firstGroup,secondGroup);
     wishActivity.appendChild(track);
 }
-refreshWishActivity();
+
+function listenForPublicWishes(){
+    onValue(ref(db,"birthdayWishes"),(snapshot)=>{
+        const data=snapshot.val()||{};
+        // Only exact choices from the public selector are allowed into the moving ticker.
+        // Older/custom messages remain in Firebase but are excluded from this display.
+        const validWishPattern=/^(?:[1-9]\d{0,3}|[1-9]\d{0,2}(?:,\d{3})) (?:million|billion|trillion) good things in life$/;
+        const submitted=Object.values(data)
+            .filter(item=>item && item.requestType!=="liveAnnouncement" && validWishPattern.test(String(item.message||"").trim()))
+            .sort((a,b)=>getWishTimestamp(b.createdAt)-getWishTimestamp(a.createdAt));
+        refreshWishActivity(submitted);
+    },(error)=>{
+        console.error("Could not load public wishes for ticker:",error);
+        refreshWishActivity([]);
+    });
+}
+
+function getWishTimestamp(value){
+    if(typeof value==="number") return value;
+    if(value && typeof value==="object" && typeof value.seconds==="number") return value.seconds*1000;
+    const number=Number(value);
+    return Number.isFinite(number)?number:0;
+}
+
+listenForPublicWishes();
 
 function showStatus(text,error=false){
     status.textContent=text;
@@ -492,6 +540,21 @@ form.addEventListener("submit",async(e)=>{
 const announcementForm=document.getElementById("announcementForm");
 const announcementStatus=document.getElementById("announcementStatus");
 const announcementSend=document.getElementById("announcementSend");
+const announcementDate=document.getElementById("announcementDate");
+
+function localDateKey(date=new Date()){
+    const year=date.getFullYear();
+    const month=String(date.getMonth()+1).padStart(2,"0");
+    const day=String(date.getDate()).padStart(2,"0");
+    return `${year}-${month}-${day}`;
+}
+function updateAnnouncementDate(){
+    const now=new Date();
+    announcementDate.value=now.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+    announcementDate.dataset.date=localDateKey(now);
+}
+updateAnnouncementDate();
+setInterval(updateAnnouncementDate,60000);
 
 function showAnnouncementStatus(message,error=false){
     announcementStatus.textContent=message;
@@ -519,7 +582,9 @@ announcementForm.addEventListener("submit",async(e)=>{
             requestType:"liveAnnouncement",
             celebrantName,
             relationship,
+            celebrantRelation:relationship,
             celebrationType,
+            announcementDate:announcementDate.dataset.date || localDateKey(),
             message:"FREE LIVE ON-AIR ANNOUNCEMENT",
             createdAt:serverTimestamp(),
             status:"new"
