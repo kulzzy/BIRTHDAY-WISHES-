@@ -229,7 +229,7 @@ body{
  padding:12px 0;border:1px solid rgba(255,191,22,.55);border-radius:14px;overflow:hidden;
  background:linear-gradient(135deg,rgba(4,15,37,.98),rgba(5,24,51,.96));
 }
-.wish-track{display:flex;align-items:stretch;gap:10px;width:max-content;animation:wishScroll 30s linear infinite;}
+.wish-track{display:flex;align-items:stretch;gap:10px;width:max-content;animation:wishScroll 55s linear infinite;}
 #wishActivity:hover .wish-track{animation-play-state:paused;}
 .wish-track-group{display:flex;align-items:stretch;gap:10px;padding-right:10px;}
 @keyframes wishScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -264,7 +264,129 @@ body{
 .wish-activity-country{font-size:12px;font-weight:800;color:#e5eaf4;}
 
 
-</style>
+
+/* PHONE CALL INTERVIEW BOOKING — luxury standalone section */
+.interview-booking-section{
+  position:relative;isolation:isolate;overflow:hidden;
+  margin:42px 0 18px;padding:23px 16px 19px;
+  border:1px solid rgba(255,215,0,.8);border-radius:20px;
+  background:radial-gradient(ellipse at top right,rgba(174,133,35,.28),transparent 48%),linear-gradient(145deg,#030914 0%,#10233e 48%,#050b18 100%);
+  box-shadow:0 12px 30px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.12);
+  text-align:center;
+}
+.interview-booking-section:before{
+  content:"";position:absolute;inset:7px;z-index:-1;pointer-events:none;
+  border:1px solid rgba(255,215,0,.18);border-radius:14px;
+}
+.interview-booking-heading{
+  margin:0 0 9px;color:#ffe7a0;font-size:clamp(18px,4.8vw,25px);
+  font-weight:950;letter-spacing:.45px;line-height:1.2;
+  text-shadow:0 2px 12px rgba(255,194,55,.22);
+}
+.interview-booking-copy{max-width:560px;margin:0 auto 18px;color:#e5eaf3;font-size:13px;line-height:1.6;font-weight:600;}
+.interview-launch{
+  display:block;width:100%;margin:0 auto;padding:18px 14px;
+  border:2px solid #ffe08a;border-radius:14px;
+  background:linear-gradient(115deg,#f8d66d 0%,#fff0b4 22%,#b8892e 52%,#ffe7a0 78%,#c39336 100%);
+  color:#07152b;text-align:center;font-size:16px;font-weight:950;letter-spacing:.25px;
+  box-shadow:0 8px 22px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.7);cursor:pointer;
+}
+.interview-booking-hint{margin:13px 0 0;color:#ffe7a0;font-size:14px;font-weight:900;letter-spacing:.2px;}
+.interview-booking-hint .phone-icons{display:inline-block;margin-right:5px;font-size:19px;vertical-align:-2px;}
+@media(min-width:620px){.interview-booking-section{margin-top:50px;padding:28px 24px 22px;}}
+.interview-overlay{
+  display:none;position:fixed;inset:0;z-index:99999;
+  padding:12px;background:rgba(0,0,0,.82);overflow-y:auto;
+}
+.interview-overlay.open{display:block;}
+.interview-dialog{
+  position:relative;width:min(100%,800px);margin:0 auto;
+  padding:12px 0 20px;background:#06122a;border:1px solid #c9a94b;
+  border-radius:16px;box-shadow:0 15px 45px rgba(0,0,0,.6);
+}
+.interview-close{
+  position:sticky;top:8px;z-index:5;display:block;margin:0 12px 8px auto;
+  width:40px;height:40px;border:1px solid #ffd700;border-radius:50%;
+  background:#ffd700;color:#06122a;font-size:25px;font-weight:900;cursor:pointer;
+}
+.interview-content{
+  width:min(100% - 28px,760px);margin:0 auto;color:#fff;
+  font-family:Arial,Helvetica,sans-serif;line-height:1.6;
+}
+.interview-content .price-card{
+  margin:10px 0;padding:10px 12px;border:3px solid #c0c0c0;border-radius:16px;
+  background:#ffd700;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.3);
+}
+.interview-content .price-label{color:#06122a;font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.7px;}
+.interview-content .price{margin:0;color:#06122a;font-size:clamp(27px,7vw,36px);line-height:1.15;font-weight:900;}
+.interview-content .price-note{color:#06122a;font-size:11px;font-weight:700;}
+.interview-content .booking-warning{
+  margin:10px 0 18px;padding:11px 13px;border:1px solid #e0e0e0;border-radius:11px;
+  background:#fff;color:#06122a;text-align:center;font-size:13px;font-weight:700;line-height:1.5;
+}
+.interview-content .currency-card,.interview-content .form-card{
+  margin:20px 0;padding:18px;border:1px solid #263c61;border-radius:16px;background:rgba(7,20,43,.92);
+}
+.interview-content .currency-card{
+  border:1px solid #c9a94b;border-radius:18px;
+  background:linear-gradient(145deg,#152744,#081326 65%,#172b48);
+  box-shadow:0 8px 25px rgba(0,0,0,.35),inset 0 1px 1px rgba(255,255,255,.12);
+}
+.interview-content .currency-card h2,.interview-content .form-card h2{
+  margin:0 0 5px;color:#ffd700;font-size:21px;
+}
+.interview-content .currency-card h2{
+  background:linear-gradient(90deg,#fff,#ffd700,#c0c0c0,#fff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-weight:900;
+}
+.interview-content .currency-intro,.interview-content .form-description{
+  margin:0 0 16px;color:#c2cbe0;font-size:13px;
+}
+.interview-content .currency-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;}
+.interview-content .currency-item{
+  min-width:0;padding:12px 5px;border:1px solid #b9a56d;border-radius:11px;
+  background:linear-gradient(145deg,#172b49,#09162c);text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+.interview-content .currency-item:nth-child(3n){border-color:#a9e8ff;background:linear-gradient(145deg,#173b50,#101a32);}
+.interview-content .currency-name{display:block;color:#e0e7f2;font-size:11px;line-height:1.4;}
+.interview-content .currency-value{display:block;margin-top:5px;color:#ffd700;font-size:15px;font-weight:900;overflow-wrap:anywhere;}
+.interview-content .currency-disclaimer{margin:13px 0 0;color:#c2cbe0;font-size:11px;}
+.interview-content .field{margin-bottom:17px;}
+.interview-content label{display:block;margin-bottom:7px;font-size:14px;font-weight:700;}
+.interview-content .required{color:#ffd700;}
+.interview-content input,.interview-content select{
+  display:block;width:100%;min-height:48px;padding:12px;border:1px solid #405477;border-radius:10px;
+  outline:none;background:#07142b;color:#fff;font:inherit;font-size:14px;
+}
+.interview-content input:focus,.interview-content select:focus{border-color:#ffd700;box-shadow:0 0 0 2px rgba(255,215,0,.12);}
+.interview-content input[type=file]{padding:10px;font-size:12px;}
+.interview-content input[type=file]::file-selector-button{
+  margin-right:10px;padding:8px 10px;border:0;border-radius:7px;background:#ffd700;color:#06122a;font-weight:800;
+}
+.interview-content .help{display:block;margin-top:6px;color:#c2cbe0;font-size:12px;}
+.interview-content .photo-preview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px;}
+.interview-content .photo-preview img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border:1px solid #52688c;border-radius:9px;}
+.interview-content .notice{margin:18px 0;padding:13px;border-left:4px solid #ffd700;border-radius:8px;background:#132747;color:#e5ebf8;font-size:12px;}
+.interview-content .notice strong{color:#ffd700;}
+.interview-content .submit-button{
+  display:block;width:100%;min-height:54px;padding:14px;border:0;border-radius:12px;
+  background:#ffd700;color:#06122a;font-size:16px;font-weight:900;cursor:pointer;
+}
+.interview-content .submit-button:disabled{opacity:.6;cursor:wait;}
+.interview-content .status{display:none;margin-top:15px;padding:12px;border-radius:9px;font-size:13px;overflow-wrap:anywhere;}
+.interview-content .status.show{display:block;}
+.interview-content .status.error{border:1px solid #9d4242;background:#351b25;color:#ffdada;}
+.interview-content .status.success{border:1px solid #267b52;background:#102e28;color:#d4ffe9;}
+.interview-content .interview-footer{padding:18px 10px 5px;color:#c2cbe0;text-align:center;font-size:12px;}
+.interview-content .stay-tuned{margin-top:12px;color:#ffd700;font-size:14px;font-weight:900;letter-spacing:2px;}
+@media(max-width:420px){
+ .interview-content .form-card,.interview-content .currency-card{padding:12px;}
+ .interview-content .currency-grid{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;}
+ .interview-content .currency-item{padding:9px 2px;border-radius:8px;}
+ .interview-content .currency-name{font-size:9px;line-height:1.3;}
+ .interview-content .currency-value{font-size:11px;}
+}
+\n</style>
 </head>
 
 <body>
@@ -314,8 +436,7 @@ SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
     </div>
 
     <form id="announcementForm" class="announcement-form">
-        <input id="celebrantName" name="celebrantName" type="text" maxlength="100" placeholder="Celebrant name or name of person celebrating" aria-label="Celebrant name or name of person celebrating" required>
-        <input id="celebrantRelationship" name="celebrantRelationship" type="text" maxlength="100" placeholder="Who the celebrant is to you" aria-label="Who the celebrant is to you" required>
+        <input id="celebrantName" name="celebrantName" type="text" maxlength="100" placeholder="Your name" aria-label="Your name" required>
         <select id="celebrationType" name="celebrationType" aria-label="Type of celebration" required>
             <option value="" selected disabled>SELECT TYPE OF CELEBRATION</option>
             <option value="Birthday">Birthday</option>
@@ -331,6 +452,69 @@ SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
     </form>
     <div id="announcementStatus" class="announcement-status" role="status" aria-live="polite"></div>
 </section>
+
+
+<section class="interview-booking-section" aria-labelledby="interviewBookingHeading">
+  <h2 class="interview-booking-heading" id="interviewBookingHeading">CELEBRATE BIGGER WITH A PHONE CALL INTERVIEW</h2>
+  <p class="interview-booking-copy">Give your special celebration a personal touch. Book a dedicated phone call interview with Kulzzy Radio and let your celebration shine on-air.</p>
+  <button class="interview-launch" id="openInterviewForm" type="button">BOOK YOUR CELEBRATIONS PHONE CALL INTERVIEW</button>
+  <p class="interview-booking-hint"><span class="phone-icons" aria-hidden="true">📞 📱</span>Click on the box and book call</p>
+</section>
+
+<div class="interview-overlay" id="interviewOverlay" aria-hidden="true">
+  <section class="interview-dialog" role="dialog" aria-modal="true" aria-label="Book your celebrations phone call interview">
+    <button class="interview-close" id="closeInterviewForm" type="button" aria-label="Close form">×</button>
+    <div class="interview-content">
+      <section class="price-card">
+        <div class="price-label">Celebration Phone Calls Interviews With Audiovisual</div>
+        <div class="price">₦10,000</div>
+        <div class="price-note">One booking · Two pictures required</div>
+      </section>
+      <section class="booking-warning">
+        You must book this service at least 5 days before your celebration date. Bookings made less than 5 days in advance will not be accepted.
+      </section>
+      <section class="currency-card">
+        <h2>₦10,000 — International Currency Guide</h2>
+        <p class="currency-intro">Approximate equivalents for international visitors.</p>
+        <div class="currency-grid">
+          <div class="currency-item"><span class="currency-name">🇳🇬 Nigerian Naira (NGN)</span><span class="currency-value">₦10,000</span></div>
+          <div class="currency-item"><span class="currency-name">🇺🇸 US Dollar (USD)</span><span class="currency-value">≈ $6.50</span></div>
+          <div class="currency-item"><span class="currency-name">🇬🇧 British Pound (GBP)</span><span class="currency-value">≈ £4.90</span></div>
+          <div class="currency-item"><span class="currency-name">🇪🇺 Euro (EUR)</span><span class="currency-value">≈ €5.70</span></div>
+          <div class="currency-item"><span class="currency-name">🇨🇦 Canadian Dollar (CAD)</span><span class="currency-value">≈ C$9.10</span></div>
+          <div class="currency-item"><span class="currency-name">🇦🇺 Australian Dollar (AUD)</span><span class="currency-value">≈ A$10</span></div>
+          <div class="currency-item"><span class="currency-name">🇿🇦 South African Rand (ZAR)</span><span class="currency-value">≈ R115</span></div>
+          <div class="currency-item"><span class="currency-name">🇬🇭 Ghanaian Cedi (GHS)</span><span class="currency-value">≈ GH₵95</span></div>
+          <div class="currency-item"><span class="currency-name">🇰🇪 Kenyan Shilling (KES)</span><span class="currency-value">≈ KSh900</span></div>
+          <div class="currency-item"><span class="currency-name">🇮🇳 Indian Rupee (INR)</span><span class="currency-value">≈ ₹550</span></div>
+        </div>
+        <p class="currency-disclaimer">These figures are estimates, not live exchange rates. Actual rates and payment charges may vary. The booking price is ₦10,000.</p>
+      </section>
+      <section class="form-card">
+        <h2>Book Your Celebration</h2>
+        <p class="form-description">Complete the required details and upload exactly two pictures.</p>
+        <form id="interviewBookingForm">
+          <div class="field"><label for="interviewCustomerName">Your Full Name <span class="required">*</span></label><input id="interviewCustomerName" type="text" autocomplete="name" placeholder="Enter your full name" required></div>
+          <div class="field"><label for="interviewWhatsapp">WhatsApp Number With Country Code <span class="required">*</span></label><input id="interviewWhatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="+2348012345678" required><small class="help">Include the plus sign and country code, for example +234...</small></div>
+          <div class="field"><label for="interviewBankName">Bank Name Used for Payment <span class="required">*</span></label><input id="interviewBankName" type="text" placeholder="Enter the bank name you will use for payment" autocomplete="off" required></div>
+          <div class="field"><label for="interviewCelebrantName">Celebrant's Full Name <span class="required">*</span></label><input id="interviewCelebrantName" type="text" placeholder="Who are we celebrating?" required></div>
+          <div class="field"><label for="interviewRelationship">Your Relationship With The Celebrant <span class="required">*</span></label>
+            <select id="interviewRelationship" required>
+              <option value="">Select relationship</option><option>Myself</option><option>Husband</option><option>Wife</option><option>Boyfriend</option><option>Girlfriend</option><option>Father</option><option>Mother</option><option>Son</option><option>Daughter</option><option>Brother</option><option>Sister</option><option>Friend</option><option>Colleague</option><option>Customer</option><option>Other Family Member</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label for="interviewCelebrationDate">Celebration Date <span class="required">*</span></label><input id="interviewCelebrationDate" type="date" required></div>
+          <div class="field"><label for="interviewPhotos">Upload Exactly 2 Pictures <span class="required">*</span></label><input id="interviewPhotos" type="file" accept="image/*" multiple required><small class="help">Select exactly two pictures. Large images are automatically resized and compressed before upload.</small><div id="interviewPhotoPreview" class="photo-preview"></div></div>
+          <div class="notice"><strong>Booking price: ₦10,000.</strong> Your booking details and pictures must be saved before the payment page opens. Payment must be confirmed before the booking is treated as paid.</div>
+          <button id="interviewSubmitButton" class="submit-button" type="submit">MAKE PAYMENT NOW — ₦10,000</button>
+          <div id="interviewStatusMessage" class="status" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+      <footer class="interview-footer"><div>Currency equivalents are estimates and may change.</div><div class="stay-tuned">STAY TUNED IN</div></footer>
+    </div>
+  </section>
+</div>
+
 
 <div id="status" class="status"></div>
 
@@ -564,11 +748,10 @@ function showAnnouncementStatus(message,error=false){
 announcementForm.addEventListener("submit",async(e)=>{
     e.preventDefault();
     const celebrantName=document.getElementById("celebrantName").value.trim();
-    const relationship=document.getElementById("celebrantRelationship").value.trim();
     const celebrationType=document.getElementById("celebrationType").value.trim();
 
-    if(!celebrantName||!relationship||!celebrationType){
-        showAnnouncementStatus("Please complete all three boxes before submitting.",true);
+    if(!celebrantName||!celebrationType){
+        showAnnouncementStatus("Please complete all required boxes before submitting.",true);
         return;
     }
 
@@ -581,8 +764,6 @@ announcementForm.addEventListener("submit",async(e)=>{
         await push(ref(db,"birthdayWishes"),{
             requestType:"liveAnnouncement",
             celebrantName,
-            relationship,
-            celebrantRelation:relationship,
             celebrationType,
             announcementDate:announcementDate.dataset.date || localDateKey(),
             message:"FREE LIVE ON-AIR ANNOUNCEMENT",
@@ -599,6 +780,155 @@ announcementForm.addEventListener("submit",async(e)=>{
         announcementSend.textContent="SUBMIT FREE ANNOUNCEMENT";
     }
 });
+</script>
+
+
+<!-- Phone Call Interview booking: separate Firebase app and isolated form logic -->
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+<script>
+"use strict";
+(function(){
+  const overlay=document.getElementById("interviewOverlay");
+  const openButton=document.getElementById("openInterviewForm");
+  const closeButton=document.getElementById("closeInterviewForm");
+  const form=document.getElementById("interviewBookingForm");
+  const photoInput=document.getElementById("interviewPhotos");
+  const preview=document.getElementById("interviewPhotoPreview");
+  const button=document.getElementById("interviewSubmitButton");
+  const statusBox=document.getElementById("interviewStatusMessage");
+  const dateInput=document.getElementById("interviewCelebrationDate");
+  const BOOKING_AMOUNT=10000, REQUIRED_PHOTOS=2, MAX_PHOTO_BYTES=120*1024, MAX_TOTAL_BYTES=650*1024;
+  const PAYMENT_PAGE_URL=new URL("payment.html",window.location.href);
+  let database,auth,submitting=false;
+
+  function openForm(){
+    overlay.classList.add("open");overlay.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    closeButton.focus();
+  }
+  function closeForm(){
+    if(submitting)return;
+    overlay.classList.remove("open");overlay.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+    openButton.focus();
+  }
+  openButton.addEventListener("click",openForm);
+  closeButton.addEventListener("click",closeForm);
+  overlay.addEventListener("click",e=>{if(e.target===overlay)closeForm();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&overlay.classList.contains("open"))closeForm();});
+
+  const now=new Date();
+  dateInput.min=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+
+  function showStatus(message,type){statusBox.textContent=message;statusBox.className="status show "+type;}
+  function readDataURL(file){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result));r.onerror=()=>reject(new Error("Your browser could not read "+file.name));r.readAsDataURL(file);});}
+  async function compressImage(file){
+    let image;
+    if("createImageBitmap" in window){try{image=await createImageBitmap(file);}catch(e){}}
+    if(!image){
+      const url=URL.createObjectURL(file);
+      try{image=await new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(new Error(file.name+" could not be opened. Use a JPG or PNG image."));img.src=url;});}
+      finally{URL.revokeObjectURL(url);}
+    }
+    const w=image.width,h=image.height;
+    if(!w||!h)throw new Error(file.name+" has invalid dimensions.");
+    const canvas=document.createElement("canvas"),ctx=canvas.getContext("2d");
+    if(!ctx)throw new Error("Your browser cannot compress pictures on this device.");
+    let scale=Math.min(1,1800/Math.max(w,h)),blob=null;
+    for(let pass=0;pass<12;pass++){
+      canvas.width=Math.max(1,Math.round(w*scale));canvas.height=Math.max(1,Math.round(h*scale));
+      ctx.fillStyle="#fff";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(image,0,0,canvas.width,canvas.height);
+      for(const quality of [.86,.76,.66,.56,.46,.36,.28,.20]){
+        blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error("Picture compression failed.")),"image/jpeg",quality));
+        if(blob.size<=MAX_PHOTO_BYTES){if(image.close)image.close();return {contentType:"image/jpeg",dataURL:await readDataURL(blob),size:blob.size};}
+      }
+      scale*=.75;
+    }
+    if(image.close)image.close();
+    if(!blob||blob.size>MAX_PHOTO_BYTES)throw new Error(file.name+" could not be reduced enough. Please select another picture.");
+    return {contentType:"image/jpeg",dataURL:await readDataURL(blob),size:blob.size};
+  }
+
+  photoInput.addEventListener("change",()=>{
+    preview.replaceChildren();const files=Array.from(photoInput.files||[]);
+    if(files.length!==REQUIRED_PHOTOS){showStatus("Please select exactly two pictures. You selected "+files.length+".","error");return;}
+    statusBox.className="status";
+    files.forEach(file=>{const img=document.createElement("img"),url=URL.createObjectURL(file);img.alt="Selected celebration picture";img.src=url;img.onload=()=>URL.revokeObjectURL(url);img.onerror=()=>URL.revokeObjectURL(url);preview.appendChild(img);});
+  });
+
+  try{
+    const config={
+      apiKey:"AIzaSyA5-6nRFImuPDe-KKZV9d2zRpOICB_q9M",
+      authDomain:"kulzzy-radio-app.firebaseapp.com",
+      databaseURL:"https://kulzzy-radio-app-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId:"kulzzy-radio-app",
+      storageBucket:"kulzzy-radio-app.firebasestorage.app",
+      messagingSenderId:"507050318850",
+      appId:"1:507050318850:web:f3ff3bd88e777ef656db1b",
+      measurementId:"G-WMZSVT4L5R"
+    };
+    const app=firebase.apps.find(a=>a.name==="kulzzyInterviewBooking")||firebase.initializeApp(config,"kulzzyInterviewBooking");
+    database=firebase.database(app);auth=firebase.auth(app);
+  }catch(error){console.error("Interview Firebase initialization failed:",error);}
+
+  function explainError(error){
+    console.error("Interview booking error:",error);
+    const code=error&&error.code?String(error.code):"";
+    if(code.includes("auth/operation-not-allowed")||code.includes("auth/admin-restricted-operation"))return "Anonymous sign-in is not enabled for this Firebase project. Enable Anonymous sign-in in Firebase Authentication.";
+    if(code.includes("auth/network-request-failed"))return "Firebase could not connect. Check your internet connection and try again.";
+    if(code.includes("PERMISSION_DENIED")||code.includes("permission-denied"))return "Firebase rejected the booking. Check that authenticated customers can create audiovisualBookings in the database rules.";
+    if(code.includes("auth/too-many-requests"))return "Too many attempts. Please wait a while and try again.";
+    if(code.includes("unavailable")||code.includes("NETWORK"))return "Firebase is temporarily unreachable. Check your internet connection and try again.";
+    return error&&error.message?error.message:"The booking could not be saved. Please try again.";
+  }
+
+  form.addEventListener("submit",async event=>{
+    event.preventDefault();if(submitting)return;
+    const customerName=document.getElementById("interviewCustomerName").value.trim();
+    const whatsapp=document.getElementById("interviewWhatsapp").value.trim();
+    const bankNameUsedForPayment=document.getElementById("interviewBankName").value.trim();
+    const celebrantName=document.getElementById("interviewCelebrantName").value.trim();
+    const relationship=document.getElementById("interviewRelationship").value;
+    const celebrationDate=dateInput.value,files=Array.from(photoInput.files||[]);
+    if(!customerName||!whatsapp||!bankNameUsedForPayment||!celebrantName||!relationship||!celebrationDate){showStatus("Please complete all required fields.","error");return;}
+    if(!/^\\+[1-9]\\d{7,14}$/.test(whatsapp)){showStatus("Enter your WhatsApp number with country code, for example +2348012345678.","error");return;}
+    if(files.length!==REQUIRED_PHOTOS){showStatus("Please select exactly two pictures.","error");return;}
+    const chosenDate=new Date(celebrationDate+"T00:00:00"),today=new Date();today.setHours(0,0,0,0);
+    const minDate=new Date(today);minDate.setDate(minDate.getDate()+5);
+    if(chosenDate<minDate){showStatus("This service must be booked at least 5 days before the celebration date.","error");return;}
+    submitting=true;button.disabled=true;
+    try{
+      const photos=[];
+      for(let i=0;i<files.length;i++){button.textContent="COMPRESSING PICTURE "+(i+1)+" OF 2...";photos.push(await compressImage(files[i]));}
+      if(photos.reduce((sum,p)=>sum+p.size,0)>MAX_TOTAL_BYTES)throw new Error("The two compressed pictures are still too large together. Please select different pictures.");
+      if(!database||!auth)throw new Error("Firebase could not initialize. Refresh the page and try again.");
+      button.textContent="CONNECTING TO FIREBASE...";
+      let customer=auth.currentUser;
+      if(!customer){const credential=await auth.signInAnonymously();customer=credential.user;}
+      if(!customer)throw new Error("Customer authentication failed. Please try again.");
+      button.textContent="SAVING BOOKING DETAILS...";
+      const bookingRef=database.ref("audiovisualBookings").push(),bookingId=bookingRef.key;
+      if(!bookingId)throw new Error("Firebase could not generate a booking reference.");
+      const booking={
+        bookingId,customerUid:customer.uid,customerName,whatsapp,bankNameUsedForPayment,
+        celebrantName,relationship,celebrationDate,
+        celebrationType:"PHONE CALL INTERVIEW WITH AUDIOVISUAL",
+        amountNgn:BOOKING_AMOUNT,paymentStatus:"pending",
+        photos:{photo1:photos[0].dataURL,photo2:photos[1].dataURL},
+        createdAt:firebase.database.ServerValue.TIMESTAMP
+      };
+      await bookingRef.set(booking);
+      try{sessionStorage.setItem("kulzzyAudiovisualBooking",JSON.stringify({bookingId,amount:BOOKING_AMOUNT,product:"Phone Call Interview With Audiovisual",paymentStatus:"pending"}));}catch(e){console.warn("Could not save session booking reference:",e);}
+      PAYMENT_PAGE_URL.searchParams.set("bookingId",bookingId);
+      PAYMENT_PAGE_URL.searchParams.set("amount",String(BOOKING_AMOUNT));
+      showStatus("Your booking and both pictures have been saved successfully. Opening the payment page...","success");
+      button.textContent="OPENING PAYMENT...";
+      setTimeout(()=>window.location.assign(PAYMENT_PAGE_URL.toString()),500);
+    }catch(error){showStatus(explainError(error),"error");button.disabled=false;button.textContent="MAKE PAYMENT NOW — ₦10,000";submitting=false;}
+  });
+})();
 </script>
 
 </body>
