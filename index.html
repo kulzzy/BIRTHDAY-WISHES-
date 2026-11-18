@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Birthday Wishes</title>
+
+<style>
+*{box-sizing:border-box;}
+
+html,body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+        radial-gradient(circle at 50% 0%,rgba(30,55,100,.30),transparent 45%),
+        linear-gradient(135deg,#07152f,#020b1c 70%,#06132b);
+    color:#fff;
+    padding:14px 8px 30px;
+}
+
+.page{width:100%;max-width:1100px;margin:auto;}
+
+.title{
+    margin:0;
+    text-align:center;
+    font-size:clamp(17px,5.5vw,25px);
+    line-height:1.02;
+    font-weight:950;
+    letter-spacing:-.4px;
+    text-transform:uppercase;
+    color:#fff;
+}
+
+.title span{color:#ffbf16;}
+
+.decor{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    margin:0 auto 9px;
+}
+
+.decor i{
+    display:block;
+    width:38px;
+    height:2px;
+    background:#ffbf16;
+    border-radius:20px;
+}
+
+.decor b{
+    width:6px;
+    height:6px;
+    background:#ffbf16;
+    border-radius:50%;
+}
+
+.message-card{
+    position:relative;
+    width:100%;
+    max-width:100%;
+    height:90px;
+    min-height:90px;
+    margin:0 auto;
+    border:2px solid #ffbf16;
+    border-radius:12px;
+    background:linear-gradient(135deg,#07152f,#0a2145);
+    box-shadow:0 8px 20px rgba(0,0,0,.30);
+    overflow:hidden;
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:contain;
+    object-position:center;
+}
+
+#wish{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    min-height:90px;
+    margin:0;
+    border:0;
+    outline:0;
+    padding:0 42px 0 14px;
+    background:transparent;
+    color:#ffca31;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:1000;
+    line-height:1.12;
+    cursor:pointer;
+    text-align:left;
+    appearance:none;
+    -webkit-appearance:none;
+    z-index:10;
+    white-space:normal;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    -webkit-text-stroke:0;
+    background-image:
+        linear-gradient(45deg,transparent 50%,#ffbf16 50%),
+        linear-gradient(135deg,#ffbf16 50%,transparent 50%);
+    background-position:
+        calc(100% - 22px) 50%,
+        calc(100% - 13px) 50%;
+    background-size:8px 8px,8px 8px;
+    background-repeat:no-repeat;
+}
+
+#wish option{
+    color:#ffca31;
+    background:#07152f;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:1000;
+    padding:8px;
+}
+
+.send{
+    display:block;
+    width:88%;
+    min-width:0;
+    margin:9px auto 20px;
+    padding:11px 18px;
+    border:2px solid #ffbf16;
+    border-radius:14px;
+    background:#07152f;
+    color:#ffbf16;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow:0 6px 15px rgba(0,0,0,.30);
+}
+
+.send:active{transform:translateY(1px);}
+.send:disabled{opacity:.65;cursor:not-allowed;}
+
+.status{
+    display:none;
+    max-width:700px;
+    margin:0 auto 20px;
+    padding:14px 18px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:800;
+}
+
+.status.show{
+    display:block;
+    background:#153f28;
+    color:#b9ffd0;
+    border:1px solid #42cf75;
+}
+
+.status.error{
+    background:#4a1e25;
+    color:#ffd1d7;
+    border-color:#ff6575;
+}
+
+@media(min-width:651px){
+    body{padding:20px 14px 40px;}
+
+    .title{
+        font-size:clamp(18px,3vw,30px);
+        line-height:1.02;
+        letter-spacing:-.6px;
+    }
+
+    .decor{gap:6px;margin-bottom:10px;}
+    .decor i{width:50px;height:2px;}
+    .decor b{width:7px;height:7px;}
+
+    .message-card{
+        height:105px;
+        min-height:105px;
+        border-radius:14px;
+    }
+
+
+    #wish{
+        min-height:105px;
+        padding:0 50px 0 18px;
+        font-size:clamp(14px,1.8vw,22px);
+        line-height:1.15;
+        background-position:
+            calc(100% - 29px) 50%,
+            calc(100% - 19px) 50%;
+        background-size:9px 9px,9px 9px;
+    }
+
+    #wish option{
+        font-size:17px;
+        padding:8px;
+    }
+
+    .send{
+        width:auto;
+        min-width:240px;
+        margin:10px auto 20px;
+        padding:11px 24px;
+        font-size:16px;
+    }
+}
+
+/* Country selector and five rotating wish cards */
+.country-wrap{margin:10px 0 0;}
+#country{
+ display:block;width:100%;min-height:48px;padding:12px 14px;border:2px solid #ffbf16;
+ border-radius:10px;background:linear-gradient(135deg,rgba(4,15,37,.98),rgba(5,24,51,.96));color:#fff;font-size:15px;font-weight:800;
+ outline:none;
+}
+#country option{background:#07152f;color:#fff;}
+#wishActivity{
+ position:relative;isolation:isolate;display:block;width:100%;margin:12px 0 0;
+ padding:12px 0;border:1px solid rgba(255,191,22,.55);border-radius:14px;overflow:hidden;
+ background:linear-gradient(135deg,rgba(4,15,37,.98),rgba(5,24,51,.96));
+}
+.wish-track{display:flex;align-items:stretch;gap:10px;width:max-content;animation:wishScroll 55s linear infinite;}
+#wishActivity:hover .wish-track{animation-play-state:paused;}
+.wish-track-group{display:flex;align-items:stretch;gap:10px;padding-right:10px;}
+@keyframes wishScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.announcement-section{margin:30px 0 0;padding:18px 14px 20px;border:1px solid rgba(255,191,22,.65);border-radius:16px;background:#F6F6F6;box-shadow:0 8px 22px rgba(0,0,0,.25);}
+.announcement-title{margin:0;text-align:center;color:#06152B;font-size:clamp(19px,5vw,27px);font-weight:950;line-height:1.15;}
+.announcement-subtitle{margin:7px 0 16px;text-align:center;color:#06152B;font-size:14px;font-weight:800;}
+.announcement-date-wrap{margin:0 0 12px;}
+.announcement-date-wrap label{display:block;margin:0 0 7px;color:#ffca31;font-size:12px;font-weight:950;letter-spacing:.4px;}
+.announcement-date-wrap input{display:block;width:100%;min-height:46px;padding:12px 13px;border:2px solid #ffbf16;border-radius:10px;background:#07152f;color:#fff;font:800 15px Arial,Helvetica,sans-serif;outline:none;cursor:default;}
+.announcement-form{display:grid;gap:11px;}
+.announcement-form input,.announcement-form select,.announcement-form textarea{display:block;width:100%;min-height:49px;padding:12px 13px;border:2px solid #ffbf16;border-radius:10px;background:#07152f;color:#ffca31;font:800 15px Arial,Helvetica,sans-serif;outline:none;}
+.announcement-form textarea{min-height:88px;resize:vertical;line-height:1.45;grid-column:1/-1;}
+.announcement-form textarea::placeholder{color:#e7eaf1;opacity:1;}
+.announcement-word-count{grid-column:1/-1;margin-top:-6px;color:#d6b45d;font:700 12px Arial,Helvetica,sans-serif;text-align:right;}
+.announcement-form input::placeholder{color:#e7eaf1;opacity:1;}
+.announcement-form select option{background:#07152f;color:#ffca31;}
+/* Premium custom celebration picker: visible colour cards work consistently on Android. */
+.celebration-picker{position:relative;width:100%;min-width:0;z-index:5;}
+.celebration-picker select{position:absolute!important;width:1px!important;height:1px!important;min-height:1px!important;padding:0!important;margin:0!important;opacity:0!important;pointer-events:none!important;}
+.celebration-picker-trigger{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:49px;padding:12px 13px;border:2px solid #d6b45d;border-radius:10px;background:linear-gradient(135deg,#17243b,#07152f);color:#fff;font:800 15px Arial,Helvetica,sans-serif;text-align:left;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.16);}
+.celebration-picker-trigger:after{content:"⌄";font-size:22px;line-height:1;color:#f5d889;}
+.celebration-picker-menu{display:none;position:absolute;top:calc(100% + 7px);left:0;right:0;max-height: min(62vh,430px);overflow-y:auto;padding:8px;gap:7px;border:1px solid #c8a75c;border-radius:13px;background:#07152f;box-shadow:0 14px 32px rgba(0,0,0,.45);z-index:1000;}
+.celebration-picker.open .celebration-picker-menu{display:grid;}
+.celebration-choice{width:100%;min-height:48px;padding:11px 12px;border:1px solid rgba(255,255,255,.28);border-radius:9px;text-align:left;font:800 14px/1.3 Arial,Helvetica,sans-serif;cursor:pointer;box-shadow:inset 0 1px 0 rgba(255,255,255,.12);}
+.celebration-choice:active{transform:scale(.99);filter:brightness(1.12);}
+.celebration-choice[aria-selected="true"]{outline:2px solid #fff;outline-offset:1px;}
+@media(min-width:620px){.celebration-picker-menu{max-height:480px;}.celebration-choice{font-size:14px;}}
+
+.announcement-send{display:block;width:100%;min-height:48px;padding:12px;border:2px solid #ffbf16;border-radius:12px;background:#ffbf16;color:#07152f;font-size:15px;font-weight:950;cursor:pointer;}
+.announcement-send:disabled{opacity:.65;cursor:not-allowed;}
+.announcement-status{display:none;margin:12px 0 0;padding:12px;border-radius:10px;text-align:center;font-weight:800;}
+.announcement-status.show{display:block;background:#153f28;color:#b9ffd0;border:1px solid #42cf75;}
+.announcement-status.error{background:#4a1e25;color:#ffd1d7;border-color:#ff6575;}
+@media(min-width:620px){.announcement-section{padding:22px;}.announcement-form{grid-template-columns:1fr 1fr 1fr;}.announcement-send{grid-column:1/-1;max-width:360px;justify-self:center;}}
+/* Soft world-map watermark stays behind the wishes and never competes with their text. */
+#wishActivity::before{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.13;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 420'%3E%3Cg fill='%23ffd34d' stroke='%23ffd34d' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M85 100l42-35 55 8 25 24 44 8 19 31-22 22-8 35-27 12-17 47-26-4-14-37-32-18-13-39-28-15zM215 238l34 10 28 39-9 42-24 44-21-13-7-42-19-37zM353 85l33-21 43 9 17 23-15 18-39-3-19 15-20-14zM408 135l43-24 52 9 29 25 39-2 38 31-11 31-42 2-15 27-30-4-13 42-23 15-16-38-26-24-8-39-24-19zM462 265l35 8 23 29-13 47-24 20-16-38-18-22zM578 95l52-24 66 8 37 30 46 3 21 25-24 24-48-6-23 20-40-9-30 14-34-23-31-4-20-29zM739 254l34-13 38 16 14 30-22 22-40-6-23-21z'/%3E%3C/g%3E%3C/svg%3E");
+ background-position:center;background-size:cover;background-repeat:no-repeat;
+}
+.wish-activity-card{
+ position:relative;z-index:0;display:flex;flex:0 0 auto;flex-direction:column;gap:5px;width:min(78vw,290px);min-height:70px;padding:11px 13px;border:1px solid rgba(255,191,22,.75);
+ border-radius:10px;background:rgba(3,12,29,.92);
+ color:#fff;overflow-wrap:anywhere;
+}
+.wish-activity-text{font-size:14px;font-weight:900;line-height:1.35;color:#ffca31;}
+.wish-activity-country{font-size:12px;font-weight:800;color:#e5eaf4;}
+
+
+
+\n</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1 class="title">
+HOW MANY GOOD THINGS IN LIFE<br>
+<span>DO YOU WISH OUR CELEBRANT?</span>
+</h1>
+
+<div class="decor"><i></i><b></b><i></i></div>
+
+<form id="wishForm">
+
+<div class="message-card">
+
+
+<select id="wish" required aria-label="Select how many good things in life you wish our celebrant">
+<option value="" selected disabled>
+SELECT HOW MANY GOOD THINGS IN LIFE YOU WISH OUR CELEBRANT
+</option>
+</select>
+
+</div>
+
+<div class="country-wrap">
+<select id="country" required aria-label="Select your country">
+<option value="" selected disabled>SELECT YOUR COUNTRY</option>
+</select>
+</div>
+
+<button class="send" type="submit">
+✈️ &nbsp; SEND BIRTHDAY WISH
+</button>
+
+<div id="wishActivity" aria-live="polite"></div>
+
+</form>
+
+<section class="announcement-section" aria-labelledby="announcementTitle">
+    <h2 id="announcementTitle" class="announcement-title">ANNOUNCE ME LIVE ON-AIR</h2>
+    <p class="announcement-subtitle">( Free Celebration Announcements )</p>
+
+    <div class="announcement-date-wrap">
+        <label for="announcementDate">ANNOUNCEMENT DATE (AUTOMATIC)</label>
+        <input id="announcementDate" name="announcementDate" type="text" readonly aria-readonly="true" autocomplete="off">
+    </div>
+
+    <form id="announcementForm" class="announcement-form">
+        <input id="celebrantName" name="celebrantName" type="text" maxlength="100" placeholder="Your name" aria-label="Your name" required>
+        <select id="celebrationType" name="celebrationType" aria-label="Type of celebration" required>
+            <option value="" selected disabled>SELECT TYPE OF CELEBRATION</option>
+            <option value="6:00 AM — 🎂 Birthday Celebration">6:00 AM — 🎂 Birthday Celebration</option>
+            <option value="7:00 AM — 💼 Career Celebration">7:00 AM — 💼 Career Celebration</option>
+            <option value="8:00 AM — 🎓 Academic Achievement">8:00 AM — 🎓 Academic Achievement</option>
+            <option value="9:00 AM — 💍 Marriage Celebration">9:00 AM — 💍 Marriage Celebration</option>
+            <option value="10:00 AM — 👶 New Baby Celebration">10:00 AM — 👶 New Baby Celebration</option>
+            <option value="11:00 AM — 🏆 Recognition Celebration">11:00 AM — 🏆 Recognition Celebration</option>
+            <option value="12:00 PM — 💰 Business Success Celebration">12:00 PM — 💰 Business Success Celebration</option>
+            <option value="1:00 PM — 🏡 Property Celebration">1:00 PM — 🏡 Property Celebration</option>
+            <option value="2:00 PM — 💵 Financial Breakthrough Celebration">2:00 PM — 💵 Financial Breakthrough Celebration</option>
+            <option value="3:00 PM — 🚀 Personal Achievement Celebration">3:00 PM — 🚀 Personal Achievement Celebration</option>
+            <option value="4:00 PM — 🎵 Creative Achievement Celebration">4:00 PM — 🎵 Creative Achievement Celebration</option>
+            <option value="5:00 PM — ❤️ Family Celebration">5:00 PM — ❤️ Family Celebration</option>
+            <option value="6:00 PM — 🌍 Leadership Celebration">6:00 PM — 🌍 Leadership Celebration</option>
+            <option value="7:00 PM — ✈️ International Achievement Celebration">7:00 PM — ✈️ International Achievement Celebration</option>
+            <option value="8:00 PM — 📚 Professional Qualification Celebration">8:00 PM — 📚 Professional Qualification Celebration</option>
+            <option value="9:00 PM — 🥇 Sports Victory Celebration">9:00 PM — 🥇 Sports Victory Celebration</option>
+            <option value="10:00 PM — 🙏 Personal Victory Celebration">10:00 PM — 🙏 Personal Victory Celebration</option>
+            <option value="11:00 PM — ⛪ Spiritual Celebration">11:00 PM — ⛪ Spiritual Celebration</option>
+            <option value="12:00 AM — 🎉 New Beginning Celebration">12:00 AM — 🎉 New Beginning Celebration</option>
+            <option value="1:00 AM — 🏢 Entrepreneurship Celebration">1:00 AM — 🏢 Entrepreneurship Celebration</option>
+            <option value="2:00 AM — 🌟 Project Achievement Celebration">2:00 AM — 🌟 Project Achievement Celebration</option>
+            <option value="3:00 AM — 🤝 Reunion Celebration">3:00 AM — 🤝 Reunion Celebration</option>
+            <option value="4:00 AM — 🎖️ Promotion Celebration">4:00 AM — 🎖️ Promotion Celebration</option>
+            <option value="5:00 AM — ❤️ Everyday Happiness Celebration">5:00 AM — ❤️ Everyday Happiness Celebration</option>
+
+        </select>
+        <textarea id="celebrationDetails" name="celebrationDetails" rows="3" placeholder="Tell us a few words about this celebration (maximum 30 words)" aria-label="A few words about this celebration"></textarea>
+        <div id="celebrationWordCount" class="announcement-word-count" aria-live="polite">0 / 30 words</div>
+        <select id="announcementCountry" name="country" aria-label="Select your country" required>
+            <option value="" selected disabled>SELECT YOUR COUNTRY</option>
+        </select>
+        <button id="announcementSend" class="announcement-send" type="submit">SUBMIT FREE ANNOUNCEMENT</button>
+    </form>
+    <div id="announcementStatus" class="announcement-status" role="status" aria-live="polite"></div>
+</section>
+
+
+<div id="status" class="status"></div>
+
+</div>
+
+<script type="module">
+import {initializeApp}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {getDatabase,ref,push,serverTimestamp,onValue}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-database.js";
+
+import {getAuth,signInAnonymously}
+from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+const firebaseConfig={
+    apiKey:"AIzaSyDcdd3ZSae1Ddxmpw7pFVNwPNql0cF6C0E",
+    authDomain:"birthday-wishes-960bd.firebaseapp.com",
+    databaseURL:"https://birthday-wishes-960bd-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId:"birthday-wishes-960bd",
+    storageBucket:"birthday-wishes-960bd.firebasestorage.app",
+    messagingSenderId:"61276094940",
+    appId:"1:61276094940:web:5863a7d82caf1628170f19",
+    measurementId:"G-F9HZHJPXRL"
+};
+
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const auth=getAuth(app);
+
+const form=document.getElementById("wishForm");
+const wish=document.getElementById("wish");
+const country=document.getElementById("country");
+const wishActivity=document.getElementById("wishActivity");
+const status=document.getElementById("status");
+const button=form.querySelector(".send");
+
+function formatNumber(number){
+    return number.toLocaleString("en-US");
+}
+
+function addWish(number,unit){
+    const option=document.createElement("option");
+    option.value=`${formatNumber(number)} ${unit} good things in life`;
+    option.textContent=`${formatNumber(number)} ${unit} good things in life`;
+    wish.appendChild(option);
+}
+
+for(let number=1;number<=9999;number++){
+    addWish(number,"million");
+}
+
+for(let number=1;number<=9999;number++){
+    addWish(number,"billion");
+}
+
+for(let number=1;number<=9999;number++){
+    addWish(number,"trillion");
+}
+
+const countries = ["Nigeria","Kosovo","Afghanistan","Albania","Algeria","American Samoa","Andorra","Angola","Anguilla","Antarctica","Antigua and Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bonaire, Sint Eustatius and Saba","Bosnia and Herzegovina","Botswana","Bouvet Island","Brazil","British Indian Ocean Territory","Brunei","Bulgaria","Burkina Faso","Burundi","Cabo Verde","Cambodia","Cameroon","Canada","Cayman Islands","Central African Republic","Chad","Chile","China","Christmas Island","Cocos (Keeling) Islands","Colombia","Comoros","Congo (Republic of the)","Cook Islands","Costa Rica","Croatia","Cuba","Curaçao","Cyprus","Czechia","Côte d’Ivoire","Democratic Republic of the Congo","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Falkland Islands (Malvinas)","Faroe Islands","Fiji","Finland","France","French Guiana","French Polynesia","French Southern Territories","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guadeloupe","Guam","Guatemala","Guernsey","Guinea","Guinea-Bissau","Guyana","Haiti","Heard Island and McDonald Islands","Holy See (Vatican City State)","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macao","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Martinique","Mauritania","Mauritius","Mayotte","Mexico","Micronesia, Federated States of","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauru","Nepal","Netherlands","New Caledonia","New Zealand","Nicaragua","Niger","Niue","Norfolk Island","North Korea","North Macedonia","Northern Mariana Islands","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Pitcairn","Poland","Portugal","Puerto Rico","Qatar","Romania","Russia","Rwanda","Réunion","Saint Barthélemy","Saint Helena, Ascension and Tristan da Cunha","Saint Kitts and Nevis","Saint Lucia","Saint Martin (French part)","Saint Pierre and Miquelon","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Sint Maarten (Dutch part)","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Georgia and the South Sandwich Islands","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Svalbard and Jan Mayen","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor-Leste","Togo","Tokelau","Tonga","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan","Turks and Caicos Islands","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","United States Minor Outlying Islands","Uruguay","Uzbekistan","Vanuatu","Venezuela","Vietnam","Virgin Islands, British","Virgin Islands, U.S.","Wallis and Futuna","Western Sahara","Yemen","Zambia","Zimbabwe","Åland Islands"];
+countries.forEach((name)=>{
+    const option=document.createElement("option");
+    option.value=name;
+    option.textContent=name;
+    country.appendChild(option);
+});
+
+const announcementCountry=document.getElementById("announcementCountry");
+countries.forEach((name)=>{
+    const option=document.createElement("option");
+    option.value=name;
+    option.textContent=name;
+    announcementCountry.appendChild(option);
+});
+
+function randomItem(items){
+    return items[Math.floor(Math.random()*items.length)];
+}
+
+function refreshWishActivity(submittedWishes=[]){
+    const wishOptions=Array.from(wish.options).filter(option=>option.value);
+    const shuffled=wishOptions.slice();
+    for(let i=shuffled.length-1;i>0;i--){
+        const j=Math.floor(Math.random()*(i+1));
+        [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+    }
+
+    // Keep the normal random wishes moving even when nobody has submitted a wish.
+    const cards=[];
+    shuffled.slice(0,5).forEach(option=>cards.push({
+        message:option.textContent,
+        country:randomItem(countries)
+    }));
+
+    // Add real public submissions to the same moving ticker as they arrive.
+    submittedWishes.slice(0,12).forEach(item=>cards.push({
+        message:String(item.message||'').trim(),
+        country:String(item.country||randomItem(countries)).trim()
+    }));
+
+    const usableCards=cards.filter(item=>item.message);
+    if(!usableCards.length) return;
+
+    wishActivity.replaceChildren();
+    const track=document.createElement("div");
+    track.className="wish-track";
+    const firstGroup=document.createElement("div");
+    firstGroup.className="wish-track-group";
+    const secondGroup=document.createElement("div");
+    secondGroup.className="wish-track-group";
+    secondGroup.setAttribute("aria-hidden","true");
+
+    function makeCard(data){
+        const card=document.createElement("div");
+        card.className="wish-activity-card";
+        const wishText=document.createElement("div");
+        wishText.className="wish-activity-text";
+        wishText.textContent=data.message;
+        const countryText=document.createElement("div");
+        countryText.className="wish-activity-country";
+        countryText.textContent=data.country;
+        card.append(wishText,countryText);
+        return card;
+    }
+    usableCards.forEach(data=>{
+        firstGroup.appendChild(makeCard(data));
+        secondGroup.appendChild(makeCard(data));
+    });
+    track.append(firstGroup,secondGroup);
+    wishActivity.appendChild(track);
+}
+
+function listenForPublicWishes(){
+    onValue(ref(db,"birthdayWishes"),(snapshot)=>{
+        const data=snapshot.val()||{};
+        // Only exact choices from the public selector are allowed into the moving ticker.
+        // Older/custom messages remain in Firebase but are excluded from this display.
+        const validWishPattern=/^(?:[1-9]\d{0,3}|[1-9]\d{0,2}(?:,\d{3})) (?:million|billion|trillion) good things in life$/;
+        const submitted=Object.values(data)
+            .filter(item=>item && item.requestType!=="liveAnnouncement" && validWishPattern.test(String(item.message||"").trim()))
+            .sort((a,b)=>getWishTimestamp(b.createdAt)-getWishTimestamp(a.createdAt));
+        refreshWishActivity(submitted);
+    },(error)=>{
+        console.error("Could not load public wishes for ticker:",error);
+        refreshWishActivity([]);
+    });
+}
+
+function getWishTimestamp(value){
+    if(typeof value==="number") return value;
+    if(value && typeof value==="object" && typeof value.seconds==="number") return value.seconds*1000;
+    const number=Number(value);
+    return Number.isFinite(number)?number:0;
+}
+
+listenForPublicWishes();
+
+function showStatus(text,error=false){
+    status.textContent=text;
+    status.className="status show"+(error?" error":"");
+}
+
+form.addEventListener("submit",async(e)=>{
+    e.preventDefault();
+
+    const selectedWish=wish.value.trim();
+    const selectedCountry=country.value.trim();
+
+    if(!selectedWish || !selectedCountry){
+        showStatus(
+            "Please select a wish quantity and your country.",
+            true
+        );
+        return;
+    }
+
+    button.disabled=true;
+    button.textContent="SENDING...";
+
+    try{
+        if(!auth.currentUser){
+            await signInAnonymously(auth);
+        }
+
+        const wishesRef=ref(db,"birthdayWishes");
+
+        await push(wishesRef,{
+            message:selectedWish,
+            country:selectedCountry,
+            createdAt:serverTimestamp(),
+            status:"new"
+        });
+
+        form.reset();
+
+        showStatus(
+            "🎉 Your birthday wish has been sent successfully!"
+        );
+
+    }catch(error){
+        console.error("Birthday wish error:",error);
+
+        showStatus(
+            "We could not send your wish. Please try again.",
+            true
+        );
+
+    }finally{
+        button.disabled=false;
+        button.textContent="✈️   SEND BIRTHDAY WISH";
+    }
+});
+
+const announcementForm=document.getElementById("announcementForm");
+const announcementStatus=document.getElementById("announcementStatus");
+const announcementSend=document.getElementById("announcementSend");
+const announcementDate=document.getElementById("announcementDate");
+
+function localDateKey(date=new Date()){
+    const year=date.getFullYear();
+    const month=String(date.getMonth()+1).padStart(2,"0");
+    const day=String(date.getDate()).padStart(2,"0");
+    return `${year}-${month}-${day}`;
+}
+function updateAnnouncementDate(){
+    const now=new Date();
+    announcementDate.value=now.toLocaleDateString(undefined,{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+    announcementDate.dataset.date=localDateKey(now);
+}
+updateAnnouncementDate();
+setInterval(updateAnnouncementDate,60000);
+
+function showAnnouncementStatus(message,error=false){
+    announcementStatus.textContent=message;
+    announcementStatus.className="announcement-status show"+(error?" error":"");
+}
+
+// Build a fully styled category menu instead of relying on Android's native select popup.
+const celebrationSelect=document.getElementById("celebrationType");
+const celebrationPalette=[
+ ["#8A6A16","#FFF4C2"],["#596575","#FFFFFF"],["#DCEBFA","#10243A"],["#123B68","#EAF4FF"],
+ ["#14543D","#E8FFF3"],["#702B3B","#FFF0F2"],["#6A4B91","#FFFFFF"],["#9B5A22","#FFF4E7"],
+ ["#274B55","#F0FFFF"],["#6B4F2A","#FFF7E6"],["#46566D","#FFFFFF"],["#1D477A","#F3F8FF"],
+ ["#285B4B","#F0FFF8"],["#7A344E","#FFF2F6"],["#3F4C5B","#FFFFFF"],["#6C5A22","#FFFBE6"],
+ ["#354B78","#F1F5FF"],["#5A3B70","#FFF5FF"],["#8C6B25","#FFF8DB"],["#3C5969","#F2FBFF"],
+ ["#355B3E","#F2FFF3"],["#71465D","#FFF4F8"],["#5A6470","#FFFFFF"],["#8B6A2D","#FFF9E8"]
+];
+const picker=document.createElement("div");
+picker.className="celebration-picker";
+celebrationSelect.parentNode.insertBefore(picker,celebrationSelect);
+picker.appendChild(celebrationSelect);
+const pickerTrigger=document.createElement("button");
+pickerTrigger.type="button";
+pickerTrigger.className="celebration-picker-trigger";
+pickerTrigger.textContent="SELECT TYPE OF CELEBRATION";
+pickerTrigger.setAttribute("aria-haspopup","listbox");
+pickerTrigger.setAttribute("aria-expanded","false");
+picker.appendChild(pickerTrigger);
+const pickerMenu=document.createElement("div");
+pickerMenu.className="celebration-picker-menu";
+pickerMenu.setAttribute("role","listbox");
+picker.appendChild(pickerMenu);
+const categoryOptions=Array.from(celebrationSelect.options).filter(option=>option.value);
+categoryOptions.forEach((option,index)=>{
+ const choice=document.createElement("button");
+ choice.type="button";
+ choice.className="celebration-choice";
+ choice.textContent=option.textContent;
+ choice.style.background=`linear-gradient(135deg,${celebrationPalette[index][0]},${celebrationPalette[index][0]}dd)`;
+ choice.style.color=celebrationPalette[index][1];
+ choice.setAttribute("role","option");
+ choice.setAttribute("aria-selected","false");
+ choice.addEventListener("click",()=>{
+  celebrationSelect.value=option.value;
+  celebrationSelect.dispatchEvent(new Event("change",{bubbles:true}));
+  pickerTrigger.textContent=option.textContent;
+  pickerTrigger.style.background=`linear-gradient(135deg,${celebrationPalette[index][0]},${celebrationPalette[index][0]}dd)`;
+  pickerTrigger.style.color=celebrationPalette[index][1];
+  pickerMenu.querySelectorAll(".celebration-choice").forEach(item=>item.setAttribute("aria-selected","false"));
+  choice.setAttribute("aria-selected","true");
+  picker.classList.remove("open");
+  pickerTrigger.setAttribute("aria-expanded","false");
+ });
+ pickerMenu.appendChild(choice);
+});
+pickerTrigger.addEventListener("click",()=>{
+ const isOpen=picker.classList.toggle("open");
+ pickerTrigger.setAttribute("aria-expanded",String(isOpen));
+});
+document.addEventListener("click",event=>{
+ if(!picker.contains(event.target)){
+  picker.classList.remove("open");
+  pickerTrigger.setAttribute("aria-expanded","false");
+ }
+});
+document.addEventListener("keydown",event=>{
+ if(event.key==="Escape"){
+  picker.classList.remove("open");
+  pickerTrigger.setAttribute("aria-expanded","false");
+ }
+});
+
+const celebrationDetailsInput=document.getElementById("celebrationDetails");
+const celebrationWordCount=document.getElementById("celebrationWordCount");
+function countCelebrationWords(value){
+    return value.trim() ? value.trim().split(/\s+/).length : 0;
+}
+celebrationDetailsInput.addEventListener("input",()=>{
+    const words=celebrationDetailsInput.value.trim().split(/\s+/).filter(Boolean);
+    if(words.length>30){
+        celebrationDetailsInput.value=words.slice(0,30).join(" ");
+    }
+    celebrationWordCount.textContent=countCelebrationWords(celebrationDetailsInput.value)+" / 30 words";
+});
+
+announcementForm.addEventListener("submit",async(e)=>{
+    e.preventDefault();
+    const celebrantName=document.getElementById("celebrantName").value.trim();
+    const celebrationType=document.getElementById("celebrationType").value.trim();
+    const celebrationDetails=celebrationDetailsInput.value.trim();
+    const selectedAnnouncementCountry=announcementCountry.value.trim();
+
+    if(countCelebrationWords(celebrationDetails)>30){
+        showAnnouncementStatus("Please keep your celebration description within 30 words.",true);
+        return;
+    }
+    if(!celebrantName||!celebrationType||!selectedAnnouncementCountry){
+        showAnnouncementStatus("Please complete all required boxes before submitting.",true);
+        return;
+    }
+
+    announcementSend.disabled=true;
+    announcementSend.textContent="SUBMITTING...";
+    try{
+        if(!auth.currentUser){
+            await signInAnonymously(auth);
+        }
+        await push(ref(db,"birthdayWishes"),{
+            requestType:"liveAnnouncement",
+            celebrantName,
+            celebrationType,
+            celebrationDetails,
+            country:selectedAnnouncementCountry,
+            announcementDate:announcementDate.dataset.date || localDateKey(),
+            message:"FREE LIVE ON-AIR ANNOUNCEMENT",
+            createdAt:serverTimestamp(),
+            status:"new"
+        });
+        announcementForm.reset();
+        celebrationWordCount.textContent="0 / 30 words";
+        showAnnouncementStatus("Your free live on-air announcement request has been submitted successfully!");
+    }catch(error){
+        console.error("Live announcement request error:",error);
+        showAnnouncementStatus("We could not submit your request. Please try again.",true);
+    }finally{
+        announcementSend.disabled=false;
+        announcementSend.textContent="SUBMIT FREE ANNOUNCEMENT";
+    }
+});
+</script>
+
+
+</body>
+</html>
